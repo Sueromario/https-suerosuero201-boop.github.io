@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spinix - Casino Simulation</title>
+
+<style>
+body{
+background:#0f172a;
+color:white;
+font-family:Arial;
+margin:0;
+}
+
+header{
+background:#020617;
+padding:15px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.logo{
+font-size:22px;
+font-weight:bold;
+color:#22c55e;
+}
+
+.menu span{
+margin:10px;
+cursor:pointer;
+}
+
+.section{
+padding:20px;
+}
+
+.card{
+background:#1e293b;
+padding:15px;
+margin:10px;
+border-radius:10px;
+display:inline-block;
+width:200px;
+text-align:center;
+}
+
+button{
+padding:8px 12px;
+border:none;
+background:#22c55e;
+color:white;
+border-radius:5px;
+cursor:pointer;
+}
+
+#notificacion{
+position:fixed;
+bottom:20px;
+left:20px;
+background:#111;
+padding:10px;
+border-radius:8px;
+font-size:14px;
+}
+
+#usuariosOnline{
+position:fixed;
+top:10px;
+right:10px;
+background:#111;
+padding:8px;
+border-radius:6px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+<div class="logo">🎰 SPINIX</div>
+
+<div class="menu">
+<span onclick="mostrar('inicio')">Inicio</span>
+<span onclick="mostrar('juegos')">Juegos</span>
+<span onclick="mostrar('vip')">VIP</span>
+<span onclick="mostrar('soporte')">Soporte</span>
+<span onclick="logout()">Salir</span>
+</div>
+
+</header>
+
+<div id="usuariosOnline">Usuarios en línea: 120</div>
+
+<!-- INICIO -->
+
+<div class="section" id="inicio">
+
+<h2>Bienvenido a Spinix</h2>
+
+<p>Plataforma de simulación de casino.</p>
+
+<div class="card">
+<h3>🎰 Slots</h3>
+<button onclick="mostrar('juegos')">Jugar</button>
+</div>
+
+<div class="card">
+<h3>🎡 Ruleta</h3>
+<button onclick="mostrar('juegos')">Jugar</button>
+</div>
+
+<div class="card">
+<h3>🎲 Dados</h3>
+<button onclick="mostrar('juegos')">Jugar</button>
+</div>
+
+</div>
+
+<!-- JUEGOS -->
+
+<div class="section" id="juegos" style="display:none">
+
+<h2>Juegos</h2>
+
+<div class="card">
+<h3>🎲 Dados</h3>
+<button onclick="dados()">Lanzar</button>
+<p id="dadosResultado"></p>
+</div>
+
+<div class="card">
+<h3>🎡 Ruleta</h3>
+<button onclick="ruleta()">Girar</button>
+<p id="ruletaResultado"></p>
+</div>
+
+<div class="card">
+<h3>🎰 Slots</h3>
+<button onclick="slot()">Girar</button>
+<p id="slotResultado"></p>
+</div>
+
+</div>
+
+<!-- VIP -->
+
+<div class="section" id="vip" style="display:none">
+
+<h2>👑 Sistema VIP</h2>
+
+<p>VIP1 - $300</p>
+<p>VIP2 - $1000</p>
+<p>VIP3 - $3000</p>
+<p>VIP4 - $7000</p>
+<p>VIP5 - $10000</p>
+
+</div>
+
+<!-- SOPORTE -->
+
+<div class="section" id="soporte" style="display:none">
+
+<h2>💬 Atención al cliente</h2>
+
+<input id="mensaje" placeholder="Escribe tu mensaje">
+<button onclick="enviarMensaje()">Enviar</button>
+
+<div id="chat"></div>
+
+</div>
+
+<div id="notificacion">Actividad...</div>
+
+<script>
+
+/* navegación */
+
+function mostrar(id){
+
+document.getElementById("inicio").style.display="none";
+document.getElementById("juegos").style.display="none";
+document.getElementById("vip").style.display="none";
+document.getElementById("soporte").style.display="none";
+
+document.getElementById(id).style.display="block";
+
+}
+
+/* salir */
+
+function logout(){
+alert("Has salido de la plataforma.");
+}
+
+/* dados */
+
+function dados(){
+
+let d1=Math.floor(Math.random()*6)+1;
+let d2=Math.floor(Math.random()*6)+1;
+
+document.getElementById("dadosResultado").innerText=
+"Dados: "+d1+" y "+d2;
+
+}
+
+/* ruleta */
+
+function ruleta(){
+
+let n=Math.floor(Math.random()*37);
+
+document.getElementById("ruletaResultado").innerText=
+"Número: "+n;
+
+}
+
+/* slots */
+
+function slot(){
+
+let simbolos=["🍒","🍋","⭐","💎","🍉"];
+
+let s1=simbolos[Math.floor(Math.random()*5)];
+let s2=simbolos[Math.floor(Math.random()*5)];
+let s3=simbolos[Math.floor(Math.random()*5)];
+
+document.getElementById("slotResultado").innerText=
+s1+" "+s2+" "+s3;
+
+}
+
+/* chat soporte */
+
+function enviarMensaje(){
+
+let m=document.getElementById("mensaje").value;
+
+document.getElementById("chat").innerHTML+=
+"<p>👤 "+m+"</p>";
+
+document.getElementById("chat").innerHTML+=
+"<p>🤖 Espere su turno, un agente responderá pronto.</p>";
+
+}
+
+/* usuarios online simulados */
+
+let usuarios=120;
+
+setInterval(function(){
+
+usuarios+=Math.floor(Math.random()*3);
+
+document.getElementById("usuariosOnline").innerText=
+"Usuarios en línea: "+usuarios;
+
+},5000);
+
+/* actividad simulada */
+
+let nombres=["Carlos","Luis","Ana","Pedro","Sofía","Mario","Laura"];
+let acciones=["recargó $300","retiró $500","ganó $120","apostó $80"];
+
+setInterval(function(){
+
+let n=nombres[Math.floor(Math.random()*nombres.length)];
+let a=acciones[Math.floor(Math.random()*acciones.length)];
+
+document.getElementById("notificacion").innerText=
+n+" "+a;
+
+},4000);
+
+</script>
+
+</body>
+</html>
